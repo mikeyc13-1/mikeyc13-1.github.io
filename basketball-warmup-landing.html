@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Free Basketball Warmup Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange: #F47B20;
+      --orange-bright: #FF8C2A;
+      --gold: #F4C020;
+      --dark: #0A0A0F;
+      --dark2: #111118;
+      --panel: #16161F;
+      --border: rgba(244,123,32,0.25);
+      --text: #E8E8F0;
+      --muted: #888899;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background-color: var(--dark);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── BACKGROUND ── */
+    .bg-layer {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 60% at 15% 20%, rgba(244,123,32,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 85% 80%, rgba(244,192,32,0.07) 0%, transparent 55%),
+        var(--dark);
+    }
+    .court-lines {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.04;
+      background-image:
+        linear-gradient(rgba(244,123,32,0.8) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(244,123,32,0.8) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* ── LAYOUT ── */
+    .wrapper {
+      position: relative; z-index: 1;
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      padding: 24px 0;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .ball-icon {
+      width: 32px; height: 32px;
+      background: var(--orange);
+      border-radius: 50%;
+      position: relative;
+      flex-shrink: 0;
+      box-shadow: 0 0 20px rgba(244,123,32,0.5);
+    }
+    .ball-icon::after {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent 0px, transparent 6px,
+        rgba(0,0,0,0.35) 6px, rgba(0,0,0,0.35) 7px
+      );
+    }
+    .brand {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800; font-size: 1.1rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--orange);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 60px 0 80px;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 0.8rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--orange);
+      background: rgba(244,123,32,0.12);
+      border: 1px solid rgba(244,123,32,0.3);
+      padding: 6px 14px; border-radius: 4px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.6s ease both;
+    }
+    .eyebrow-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--orange);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.7); }
+    }
+
+    h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      line-height: 0.92;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    h1 .line-orange { color: var(--orange); display: block; }
+    h1 .line-white { color: #fff; display: block; }
+    h1 .line-outline {
+      display: block;
+      -webkit-text-stroke: 2px rgba(255,255,255,0.3);
+      color: transparent;
+    }
+
+    .hero-desc {
+      font-size: 1.1rem; line-height: 1.7;
+      color: var(--muted);
+      max-width: 480px; margin-bottom: 36px;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+    .hero-desc strong { color: var(--text); font-weight: 600; }
+
+    .features-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 10px;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+    .features-list li {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.95rem; color: var(--text);
+    }
+    .check {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: rgba(244,123,32,0.15);
+      border: 1px solid var(--orange);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      color: var(--orange); font-size: 0.65rem; font-weight: 900;
+    }
+
+    /* ── FORM CARD ── */
+    .form-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px 36px;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp 0.6s 0.15s ease both;
+      box-shadow:
+        0 0 0 1px rgba(244,123,32,0.08),
+        0 20px 60px rgba(0,0,0,0.4),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    .form-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--orange), var(--gold), var(--orange));
+      background-size: 200% 100%;
+      animation: shimmer 3s linear infinite;
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .card-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800; font-size: 1.5rem;
+      text-transform: uppercase; letter-spacing: 0.04em;
+      color: #fff; margin-bottom: 6px;
+    }
+    .card-sub {
+      font-size: 0.88rem; color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 0.78rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 6px;
+    }
+    input[type="text"], input[type="email"] {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 13px 16px;
+      font-family: 'Barlow', sans-serif;
+      font-size: 1rem; color: #fff;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    }
+    input[type="text"]:focus, input[type="email"]:focus {
+      border-color: var(--orange);
+      background: rgba(244,123,32,0.05);
+      box-shadow: 0 0 0 3px rgba(244,123,32,0.12);
+    }
+    input::placeholder { color: rgba(255,255,255,0.2); }
+
+    .submit-btn {
+      width: 100%; margin-top: 20px;
+      padding: 15px 24px;
+      background: var(--orange);
+      border: none; border-radius: 8px; cursor: pointer;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800; font-size: 1.1rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: #fff;
+      position: relative; overflow: hidden;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(244,123,32,0.3);
+    }
+    .submit-btn:hover {
+      background: var(--orange-bright);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 28px rgba(244,123,32,0.5);
+    }
+    .submit-btn:active { transform: translateY(0); }
+    .submit-btn:disabled {
+      opacity: 0.6; cursor: not-allowed; transform: none;
+    }
+    .btn-text { position: relative; z-index: 1; }
+
+    .privacy-note {
+      text-align: center; margin-top: 14px;
+      font-size: 0.78rem; color: var(--muted);
+    }
+    .privacy-note a { color: var(--orange); text-decoration: none; }
+
+    /* ── SUCCESS / ERROR STATES ── */
+    .status-msg {
+      display: none;
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 0.9rem;
+      margin-top: 16px;
+      font-weight: 500;
+    }
+    .status-msg.success {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.3);
+      color: #4ade80;
+    }
+    .status-msg.error {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.3);
+      color: #f87171;
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 32px 0;
+      display: flex; gap: 48px;
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900; font-size: 2.2rem;
+      color: var(--orange); line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.78rem; color: var(--muted);
+      margin-top: 4px; text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .stat-divider {
+      width: 1px; background: rgba(255,255,255,0.07);
+      align-self: stretch;
+    }
+
+    /* ── WHAT YOU GET ── */
+    .section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900; font-size: clamp(2rem, 4vw, 3rem);
+      text-transform: uppercase; letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+    .section-title span { color: var(--orange); }
+    .section-sub { color: var(--muted); font-size: 1rem; margin-bottom: 40px; }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 80px;
+    }
+    .guide-card {
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 28px 24px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .guide-card:hover {
+      border-color: rgba(244,123,32,0.3);
+      transform: translateY(-3px);
+    }
+    .guide-icon {
+      font-size: 2rem; margin-bottom: 14px;
+    }
+    .guide-card h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800; font-size: 1.2rem;
+      text-transform: uppercase; letter-spacing: 0.04em;
+      color: #fff; margin-bottom: 8px;
+    }
+    .guide-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 800px) {
+      .hero { grid-template-columns: 1fr; gap: 40px; }
+      .guide-grid { grid-template-columns: 1fr; }
+      .stats-bar { flex-wrap: wrap; gap: 24px; justify-content: center; }
+      .stat-divider { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-layer"></div>
+<div class="court-lines"></div>
+
+<div class="wrapper">
+
+  <!-- NAV -->
+  <nav>
+    <div class="ball-icon"></div>
+    <span class="brand">Full Court Physiotherapy</span>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow">
+        <div class="eyebrow-dot"></div>
+        Free Download — Limited Time
+      </div>
+
+      <h1>
+        <span class="line-orange">Elevate</span>
+        <span class="line-white">Your Game</span>
+        <span class="line-outline">From Tip-Off</span>
+      </h1>
+
+      <p class="hero-desc">
+        Get our <strong>expert-crafted Basketball Warmup Guide</strong> — built for players and coaches who want to prevent injury, move better, and perform at their peak from the first whistle.
+      </p>
+
+      <ul class="features-list">
+        <li><span class="check">✓</span> Dynamic warmup routines for all positions</li>
+        <li><span class="check">✓</span> Coach-ready protocols for team pre-game prep</li>
+        <li><span class="check">✓</span> Injury prevention drills from physio experts</li>
+        <li><span class="check">✓</span> Printable PDF — use it courtside, instantly</li>
+      </ul>
+    </div>
+
+    <!-- FORM CARD -->
+    <div class="form-card">
+      <div class="card-title">Get the Free Guide</div>
+      <div class="card-sub">Enter your details below — we'll send it straight to your inbox.</div>
+
+      <div class="field">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="e.g. Jordan Smith" autocomplete="name"/>
+      </div>
+
+      <div class="field">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="you@example.com" autocomplete="email"/>
+      </div>
+
+      <button class="submit-btn" id="submitBtn" onclick="handleSubmit()">
+        <span class="btn-text">🏀 Send Me the Guide</span>
+      </button>
+
+      <div class="status-msg" id="statusMsg"></div>
+
+      <p class="privacy-note">No spam, ever. Unsubscribe anytime.</p>
+    </div>
+  </section>
+
+
+</div><!-- /wrapper -->
+
+<!-- Supabase JS -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://kjtwmejnzzsrwggimimn.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtqdHdtZWpuenpzcndnZ2ltaW1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxMTc1MzYsImV4cCI6MjA4ODY5MzUzNn0.hUdDW0hbBQtAKwrym6WsII3r0yESog6wqSsqn0OP5co';
+
+  const { createClient } = supabase;
+  const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  async function handleSubmit() {
+    const nameVal  = document.getElementById('name').value.trim();
+    const emailVal = document.getElementById('email').value.trim();
+    const btn      = document.getElementById('submitBtn');
+    const msg      = document.getElementById('statusMsg');
+
+    msg.className = 'status-msg';
+    msg.innerHTML = '';
+
+    if (!nameVal || !emailVal) {
+      msg.className = 'status-msg error';
+      msg.innerHTML = '⚠️ Please fill in both your name and email address.';
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailVal)) {
+      msg.className = 'status-msg error';
+      msg.innerHTML = '⚠️ Please enter a valid email address.';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.querySelector('.btn-text').textContent = 'Sending…';
+
+    try {
+      const { error } = await db.from('Input').insert([{ name: nameVal, email: emailVal }]);
+
+      if (error) throw error;
+
+      msg.className = 'status-msg success';
+      msg.innerHTML = '🎉 You\'re in! Check your inbox for the guide.';
+      document.getElementById('name').value = '';
+      document.getElementById('email').value = '';
+      btn.querySelector('.btn-text').textContent = '✓ Guide Sent!';
+    } catch (err) {
+      console.error(err);
+      msg.className = 'status-msg error';
+      msg.innerHTML = '❌ Something went wrong. Please try again or contact us directly.';
+      btn.disabled = false;
+      btn.querySelector('.btn-text').textContent = '🏀 Send Me the Guide';
+    }
+  }
+
+  // Allow Enter key in inputs
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') handleSubmit();
+  });
+</script>
+
+</body>
+</html>
