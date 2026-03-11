@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About — Full Court Physiotherapy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange: #F47B20;
+      --orange-bright: #FF8C2A;
+      --gold: #F4C020;
+      --dark: #0A0A0F;
+      --panel: #16161F;
+      --border: rgba(244,123,32,0.2);
+      --text: #E8E8F0;
+      --muted: #888899;
+    }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── BACKGROUND ── */
+    .bg-layer {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 65% 50% at 90% 15%, rgba(244,123,32,0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 5% 85%,  rgba(244,192,32,0.06) 0%, transparent 55%),
+        var(--dark);
+    }
+    .court-lines {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.035;
+      background-image:
+        linear-gradient(rgba(244,123,32,0.8) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(244,123,32,0.8) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* ── LAYOUT ── */
+    .wrapper {
+      position: relative; z-index: 1;
+      max-width: 1000px; margin: 0 auto;
+      padding: 0 24px 96px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      padding: 24px 0;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-left { display: flex; align-items: center; gap: 10px; }
+    .ball-icon {
+      width: 30px; height: 30px; background: var(--orange);
+      border-radius: 50%; position: relative; flex-shrink: 0;
+      box-shadow: 0 0 18px rgba(244,123,32,0.45);
+    }
+    .ball-icon::after {
+      content: ''; position: absolute; inset: 0; border-radius: 50%;
+      background: repeating-linear-gradient(
+        -45deg, transparent 0px, transparent 6px,
+        rgba(0,0,0,0.35) 6px, rgba(0,0,0,0.35) 7px
+      );
+    }
+    .brand {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800; font-size: 1rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--orange);
+    }
+    .contact-btn {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800; font-size: 0.88rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: #fff; text-decoration: none;
+      background: var(--orange);
+      padding: 9px 20px; border-radius: 7px;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 4px 14px rgba(244,123,32,0.3);
+    }
+    .contact-btn:hover { background: var(--orange-bright); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 56px 0 64px;
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 0.78rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--orange);
+      background: rgba(244,123,32,0.1);
+      border: 1px solid rgba(244,123,32,0.25);
+      padding: 5px 14px; border-radius: 4px;
+      margin-bottom: 22px;
+      animation: fadeUp 0.5s ease both;
+    }
+    .eyebrow-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--orange); animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:0.4; transform:scale(0.65); }
+    }
+
+    h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900; font-size: clamp(3rem, 5.5vw, 4.8rem);
+      line-height: 0.93; text-transform: uppercase;
+      letter-spacing: -0.01em; margin-bottom: 26px;
+      animation: fadeUp 0.5s 0.05s ease both;
+    }
+    h1 .white  { color: #fff; display: block; }
+    h1 .orange { color: var(--orange); display: block; }
+    h1 .ghost  {
+      display: block;
+      -webkit-text-stroke: 2px rgba(255,255,255,0.15);
+      color: transparent;
+    }
+
+    .bio {
+      color: var(--muted); font-size: 1.05rem; line-height: 1.8;
+      animation: fadeUp 0.5s 0.1s ease both;
+    }
+    .bio p + p { margin-top: 16px; }
+    .bio strong { color: var(--text); font-weight: 600; }
+
+    /* ── AVATAR CARD ── */
+    .avatar-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      animation: fadeUp 0.5s 0.08s ease both;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .avatar-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--orange), var(--gold), var(--orange));
+      background-size: 200% 100%;
+      animation: shimmer 3s linear infinite;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .avatar-placeholder {
+      width: 100%; aspect-ratio: 1;
+      background: linear-gradient(135deg, #1e1e2e 0%, #2a1a0e 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 10px;
+      font-size: 5rem;
+    }
+    .avatar-placeholder-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 0.72rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+    }
+    .avatar-info {
+      padding: 20px 22px;
+    }
+    .avatar-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900; font-size: 1.4rem;
+      text-transform: uppercase; color: #fff;
+      letter-spacing: 0.02em;
+    }
+    .avatar-role {
+      font-size: 0.85rem; color: var(--orange);
+      margin-top: 3px; font-weight: 500;
+    }
+    .avatar-tags {
+      display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px;
+    }
+    .tag {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 0.72rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 4px 10px; border-radius: 4px;
+    }
+
+    /* ── CREDENTIALS STRIP ── */
+    .creds-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 56px;
+      animation: fadeUp 0.5s 0.15s ease both;
+    }
+    .cred {
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      padding: 20px 18px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .cred:hover { border-color: var(--border); transform: translateY(-2px); }
+    .cred-icon { font-size: 1.5rem; margin-bottom: 10px; }
+    .cred-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800; font-size: 1rem;
+      text-transform: uppercase; letter-spacing: 0.04em;
+      color: #fff; margin-bottom: 4px;
+    }
+    .cred-detail { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+    /* ── SPECIALTIES ── */
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800; font-size: 0.78rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-label::after {
+      content: ''; flex: 1; height: 1px;
+      background: rgba(255,255,255,0.07);
+    }
+
+    .specialties-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 56px;
+      animation: fadeUp 0.5s 0.2s ease both;
+    }
+    .specialty {
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      padding: 20px 20px;
+      display: flex; align-items: flex-start; gap: 14px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .specialty:hover { border-color: var(--border); transform: translateY(-2px); }
+    .specialty-icon {
+      font-size: 1.6rem; flex-shrink: 0; margin-top: 2px;
+    }
+    .specialty-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800; font-size: 1rem;
+      text-transform: uppercase; letter-spacing: 0.04em;
+      color: #fff; margin-bottom: 4px;
+    }
+    .specialty-desc { font-size: 0.84rem; color: var(--muted); line-height: 1.55; }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 36px 36px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      position: relative; overflow: hidden;
+      animation: fadeUp 0.5s 0.25s ease both;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--orange), var(--gold));
+    }
+    .cta-banner::after {
+      content: '🏀';
+      position: absolute; right: 130px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 6rem; opacity: 0.04;
+      pointer-events: none;
+    }
+    .cta-text h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900; font-size: 1.8rem;
+      text-transform: uppercase; color: #fff;
+      letter-spacing: 0.02em; margin-bottom: 6px;
+    }
+    .cta-text p { font-size: 0.9rem; color: var(--muted); }
+    .cta-btn {
+      flex-shrink: 0;
+      display: inline-block;
+      background: var(--orange); color: #fff;
+      text-decoration: none;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800; font-size: 1rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 14px 28px; border-radius: 8px;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 18px rgba(244,123,32,0.3);
+      position: relative; z-index: 1;
+    }
+    .cta-btn:hover { background: var(--orange-bright); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(244,123,32,0.45); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 720px) {
+      .hero { grid-template-columns: 1fr; gap: 40px; }
+      .avatar-card { max-width: 320px; }
+      .creds-strip { grid-template-columns: 1fr; }
+      .specialties-grid { grid-template-columns: 1fr; }
+      .cta-banner { flex-direction: column; align-items: flex-start; }
+      .cta-banner::after { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-layer"></div>
+<div class="court-lines"></div>
+
+<div class="wrapper">
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-left">
+      <div class="ball-icon"></div>
+      <span class="brand">Full Court Physiotherapy</span>
+    </div>
+    <a href="contact.html" class="contact-btn">Contact →</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <div class="eyebrow"><div class="eyebrow-dot"></div> About Me</div>
+      <h1>
+        <span class="white">Your</span>
+        <span class="orange">Court-Side</span>
+        <span class="ghost">Physio</span>
+      </h1>
+      <div class="bio">
+        <p>
+          Hi, I'm <strong>[Your Name]</strong> — a physiotherapist with a passion for keeping athletes on the court and performing at their best. I've spent years working with basketball players and coaches across Perth, from junior development programs through to elite competition.
+        </p>
+        <p>
+          I founded <strong>Full Court Physiotherapy</strong> because I believe players deserve physio care that actually understands the sport — the demands, the movements, the culture. Generic rehab doesn't cut it for athletes who live and breathe the game.
+        </p>
+        <p>
+          Whether you're recovering from an ankle sprain, managing a chronic knee issue, or just want to move and warm up smarter, I'm here to help you get back to doing what you love, faster.
+        </p>
+      </div>
+    </div>
+
+    <!-- AVATAR -->
+    <div class="avatar-card">
+      <div class="avatar-placeholder">
+        🏀
+        <span class="avatar-placeholder-label">Your photo here</span>
+      </div>
+      <div class="avatar-info">
+        <div class="avatar-name">[Your Name]</div>
+        <div class="avatar-role">Sports Physiotherapist · Perth, WA</div>
+        <div class="avatar-tags">
+          <span class="tag">Basketball</span>
+          <span class="tag">Sports Rehab</span>
+          <span class="tag">Injury Prevention</span>
+          <span class="tag">Perth</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREDENTIALS -->
+  <div class="section-label">Qualifications & Experience</div>
+  <div class="creds-strip">
+    <div class="cred">
+      <div class="cred-icon">🎓</div>
+      <div class="cred-title">Qualified Physio</div>
+      <div class="cred-detail">Bachelor of Physiotherapy — [Your University]</div>
+    </div>
+    <div class="cred">
+      <div class="cred-icon">🏀</div>
+      <div class="cred-title">Basketball Specialist</div>
+      <div class="cred-detail">Extensive experience working courtside with players and teams across Perth</div>
+    </div>
+    <div class="cred">
+      <div class="cred-icon">📍</div>
+      <div class="cred-title">Perth-Based</div>
+      <div class="cred-detail">Clinics available north and south of the river to suit your location</div>
+    </div>
+  </div>
+
+  <!-- SPECIALTIES -->
+  <div class="section-label">What I Treat</div>
+  <div class="specialties-grid">
+    <div class="specialty">
+      <span class="specialty-icon">🦵</span>
+      <div>
+        <div class="specialty-title">Knee & Ankle Injuries</div>
+        <div class="specialty-desc">ACL rehab, patellar tendinopathy, ankle sprains and chronic instability — the bread and butter of basketball physio.</div>
+      </div>
+    </div>
+    <div class="specialty">
+      <span class="specialty-icon">💪</span>
+      <div>
+        <div class="specialty-title">Strength & Load Management</div>
+        <div class="specialty-desc">Progressive loading programs to build resilient athletes who handle the demands of a full season.</div>
+      </div>
+    </div>
+    <div class="specialty">
+      <span class="specialty-icon">🛡️</span>
+      <div>
+        <div class="specialty-title">Injury Prevention</div>
+        <div class="specialty-desc">Pre-season screening, movement assessments, and warmup protocol design for players and teams.</div>
+      </div>
+    </div>
+    <div class="specialty">
+      <span class="specialty-icon">⚡</span>
+      <div>
+        <div class="specialty-title">Return to Sport</div>
+        <div class="specialty-desc">Sport-specific rehab that doesn't just get you fit — it gets you ready to compete at full intensity.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-banner">
+    <div class="cta-text">
+      <h2>Ready to Get Started?</h2>
+      <p>Book a session at the location most convenient for you.</p>
+    </div>
+    <a href="contact.html" class="cta-btn">Book a Session →</a>
+  </div>
+
+</div>
+</body>
+</html>
