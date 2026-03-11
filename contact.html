@@ -91,6 +91,47 @@
     }
     .back-link:hover { color: var(--orange); }
 
+.nav-dropdown {
+  position: relative;
+}
+.nav-dropdown-btn {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800; font-size: 0.88rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: #fff; background: var(--orange);
+  border: none; cursor: pointer;
+  padding: 9px 20px; border-radius: 7px;
+  transition: background 0.2s;
+  box-shadow: 0 4px 14px rgba(244,123,32,0.3);
+}
+.nav-dropdown-btn:hover { background: var(--orange-bright); }
+.nav-dropdown-menu {
+  display: none;
+  position: absolute; top: calc(100% + 8px); right: 0;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  min-width: 150px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+  z-index: 100;
+}
+.nav-dropdown-menu.open { display: block; }
+.nav-dropdown-menu a {
+  display: block;
+  padding: 12px 20px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 0.95rem;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text); text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+.nav-dropdown-menu a:hover {
+  background: rgba(244,123,32,0.1);
+  color: var(--orange);
+}
+    
+
     /* ── PAGE HEADER ── */
     .page-header {
       padding: 60px 0 52px;
@@ -305,7 +346,15 @@
     <div class="nav-left">
       <span class="brand">Full Court Physiotherapy</span>
     </div>
-    <a href="index.html" class="back-link">← Back</a>
+    <div class="nav-dropdown">
+  <button class="nav-dropdown-btn" onclick="toggleDropdown()">
+    Menu ▾
+  </button>
+  <div class="nav-dropdown-menu" id="dropdownMenu">
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</div>
   </nav>
 
   <!-- PAGE HEADER -->
@@ -395,5 +444,17 @@
   </div>
 
 </div><!-- /wrapper -->
+
+  <script>
+  function toggleDropdown() {
+    document.getElementById('dropdownMenu').classList.toggle('open');
+  }
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.nav-dropdown')) {
+      document.getElementById('dropdownMenu').classList.remove('open');
+    }
+  });
+</script>
+  
 </body>
 </html>
