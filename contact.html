@@ -445,20 +445,7 @@
     </div>
   </div>
 
-</div><!-- /wrapper -->
-
-  <script>
-  function toggleDropdown() {
-    document.getElementById('dropdownMenu').classList.toggle('open');
-  }
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.nav-dropdown')) {
-      document.getElementById('dropdownMenu').classList.remove('open');
-    }
-  });
-</script>
-
-<!-- CALENDLY -->
+  <!-- CALENDLY -->
   <div class="calendly-section">
     <div class="calendly-header">
       <div class="eyebrow"><div class="eyebrow-dot"></div> Free 15-Min Chat</div>
@@ -480,6 +467,19 @@
     document.getElementById('dropdownMenu').classList.toggle('open');
   }
   document.addEventListener('click', function(e) {
+    if (!e.target.closest('.nav-dropdown')) {
+      document.getElementById('dropdownMenu').classList.remove('open');
+    }
+  });
+</script>
+
+</div><!-- /wrapper -->
+
+  <script>
+  function toggleDropdown() {
+    document.getElementById('dropdownMenu').classList.toggle('open');
+  }
+  document.addEventListener('click', (e) => {
     if (!e.target.closest('.nav-dropdown')) {
       document.getElementById('dropdownMenu').classList.remove('open');
     }
